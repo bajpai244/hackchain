@@ -1,6 +1,6 @@
 export type t_hash = string
 
-export type t_hash_fn = (block: t_block) => string
+export type t_hash_fn = (block: t_block) => t_hash
 
 export interface t_block {
 	height: number;
