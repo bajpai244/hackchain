@@ -11,4 +11,4 @@ const hash_fn: t_hash_fn = (block) => {
 	return hashing_algo.update(str).digest('hex')
 }
 
-module.exports = hash_fn
+export default hash_fn

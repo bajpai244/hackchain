@@ -1,19 +1,19 @@
 import { t_block, t_data, t_enc_key, t_hash, t_miner, t_miner_verify_transaction, t_transaction } from "../types";
 
-const crypto = require('crypto')
-const calc_merkel_root = require('./merkel_tree_creator')
-const hash = require('./hash')
+import crypto from 'crypto'
+import calc_merkel_root from './merkel_tree_creator'
+import hash from './hash'
 
 class Block implements t_block {
 	height: number;
 	data: Object;
 	timestamp: Date; miner: string;
 	prev_block: t_block | null;
-	prev_hash: t_hash;
+	prev_hash: t_hash | null;
 	transactions: Array<t_transaction>;
 	merkel_root!: t_hash
 
-	constructor(height: number, data: Object, timestamp: Date, miner: string, prev_block: t_block | null, prev_hash: t_hash, transactions: Array<t_transaction>) {
+	constructor(height: number, data: Object, timestamp: Date, miner: string, prev_block: t_block | null, prev_hash: t_hash | null, transactions: Array<t_transaction>) {
 		this.height = height
 		this.data = data
 		this.timestamp = timestamp
@@ -33,7 +33,7 @@ class Block implements t_block {
 	}
 }
 
-class Miner implements t_miner {
+export class Miner implements t_miner {
 	height: number;
 	last_block: t_block | null;
 
@@ -72,5 +72,3 @@ class Miner implements t_miner {
 	}
 
 }
-
-module.exports.Miner = Miner

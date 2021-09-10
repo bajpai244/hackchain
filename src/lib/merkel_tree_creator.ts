@@ -1,6 +1,6 @@
 import { t_calc_merkle_root_fn } from "../types"
 
-const hash = require('./hash')
+import hash from './hash'
 
 const merkel_root: t_calc_merkle_root_fn = (transactions) => {
 
@@ -28,4 +28,4 @@ const merkel_root: t_calc_merkle_root_fn = (transactions) => {
 	return trs[0]
 }
 
-module.exports = merkel_root
+export default merkel_root

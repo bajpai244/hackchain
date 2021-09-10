@@ -1,14 +1,20 @@
+import crypto from 'crypto'
+
 export type t_hash = string
 
 export type t_data = Object
 
-export type t_hash_fn = (block: t_block) => t_hash
+export type t_hash_fn = (data: Object | t_block) => t_hash
 
 export type t_address = Object
 
 export type t_calc_merkle_root_fn = (transactions: Array<string>) => t_hash
 
-export type t_enc_key = {}
+export type t_enc_key_obj = crypto.KeyObject
+
+export type t_enc_key = string | Buffer
+
+export type t_digital_signature = Buffer // can be made more narrower
 
 export interface t_block {
 	height: number;
@@ -16,7 +22,7 @@ export interface t_block {
 	timestamp: Date;
 	miner: string;
 	prev_block: t_block | null;
-	prev_hash: t_hash;
+	prev_hash: t_hash | null;
 	transactions: Array<t_transaction>;
 	merkel_root: t_hash
 	calculate_merkel_root(): void
@@ -32,7 +38,7 @@ export interface t_transaction {
 }
 
 
-export type t_miner_verify_transaction = { messg: string, fr: t_enc_key; digital_signature: t_hash }
+export type t_miner_verify_transaction = { messg: string, fr: t_enc_key; digital_signature: t_digital_signature }
 
 
 export interface t_miner {
