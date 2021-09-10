@@ -1,0 +1,24 @@
+{
+  "name": "hackchain",
+  "version": "1.0.0",
+  "description": "Welcome to Hack Chain, a PoW blockchain implemented from scratch!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bajpai244/hackchain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bajpai244/hackchain/issues"
+  },
+  "homepage": "https://github.com/bajpai244/hackchain#readme",
+  "dependencies": {
+    "@tsconfig/node10": "^1.0.8",
+    "@types/node": "^16.9.1"
+  }
+}
