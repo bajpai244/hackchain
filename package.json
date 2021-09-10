@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts-serve": "tsc --watch --preserveWatchOutput",
-    "dev":"nodemon dist/src/index",
+    "dev":"nodemon dist/index",
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
     "run": "yarn build && node dist/index.js"
