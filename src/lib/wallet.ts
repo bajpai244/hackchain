@@ -3,7 +3,7 @@ import { t_enc_key, t_enc_key_obj } from "../types";
 import crypto from "crypto"
 import hash from './hash'
 
-const Transaction = require('./transaction')
+import Transaction from './trasaction'
 
 class Wallet {
 	nonce = 0;
@@ -22,7 +22,7 @@ class Wallet {
 
 	}
 
-	create_transaction(amount: number, to = "wallet_2") {
+	create_transaction(amount: number, to = this.public_key) {
 
 		const hash_obj = { from: this.public_key, to: to, amount: amount }
 
@@ -40,4 +40,4 @@ class Wallet {
 
 }
 
-module.exports = Wallet
+export default Wallet

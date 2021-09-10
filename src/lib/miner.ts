@@ -1,4 +1,4 @@
-import { t_block, t_data, t_enc_key, t_hash, t_miner, t_miner_verify_transaction, t_transaction } from "../types";
+import { t_block, t_data, t_enc_key, t_hash, t_miner, t_transaction } from "../types";
 
 import crypto from 'crypto'
 import calc_merkel_root from './merkel_tree_creator'
@@ -54,7 +54,7 @@ export class Miner implements t_miner {
 		this.last_block = new Block(this.height, data, timestamp, miner, prev_block, prev_hash, transactions)
 	}
 
-	verify_transaction({ messg, fr: public_key, digital_signature }: t_miner_verify_transaction) {
+	verify_transaction({ messg, fr: public_key, digital_signature }: t_transaction) {
 
 
 		const res = crypto.verify(

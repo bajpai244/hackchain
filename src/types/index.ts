@@ -14,7 +14,7 @@ export type t_enc_key_obj = crypto.KeyObject
 
 export type t_enc_key = string | Buffer
 
-export type t_digital_signature = Buffer // can be made more narrower
+export type t_digital_signature = Buffer  // can be made more narrower
 
 export interface t_block {
 	height: number;
@@ -30,15 +30,12 @@ export interface t_block {
 
 export interface t_transaction {
 	nonce: number;
-	fr: t_address;
-	to: t_address;
+	fr: t_enc_key_obj;
+	to: t_enc_key_obj;
 	amount: number;
-	digital_signature: t_hash;
+	digital_signature: t_digital_signature;
 	messg: string
 }
-
-
-export type t_miner_verify_transaction = { messg: string, fr: t_enc_key; digital_signature: t_digital_signature }
 
 
 export interface t_miner {
@@ -46,6 +43,6 @@ export interface t_miner {
 	last_block: t_block | null;
 
 	create_block(data: t_data, miner: string, transactions: Array<t_transaction>): void
-	verify_transaction({ messg, fr: public_key, digital_signature }: t_miner_verify_transaction): void
+	verify_transaction({ messg, fr: public_key, digital_signature }: t_transaction): void
 
 }
