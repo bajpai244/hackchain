@@ -40,4 +40,11 @@ class Wallet {
 
 }
 
+const wal = new Wallet
+
+const public_key = wal.public_key.export({ type: 'pkcs1', format: "pem" })
+const private_key = wal.private_key.export({ type: 'pkcs1', format: "pem" })
+
+
+
 export default Wallet

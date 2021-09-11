@@ -1,5 +1,7 @@
 import crypto from 'crypto'
 
+export type t_generate_keys_fn = (username: string) => void
+
 export type t_hash = string
 
 export type t_data = Object
@@ -37,6 +39,10 @@ export interface t_transaction {
 	messg: string
 }
 
+export interface t_utxo {
+	owner: t_enc_key,
+	amount: number,
+}
 
 export interface t_miner {
 	height: number;

@@ -1,4 +1,4 @@
-import { t_block, t_data, t_enc_key, t_hash, t_miner, t_transaction } from "../types";
+import { t_block, t_data, t_enc_key, t_hash, t_miner, t_transaction, t_utxo } from "../types";
 
 import crypto from 'crypto'
 import calc_merkel_root from './merkel_tree_creator'
@@ -37,11 +37,17 @@ export class Miner implements t_miner {
 	height: number;
 	last_block: t_block | null;
 	mem_pool: Array<t_transaction>
+	utxo_set: Array<t_utxo>
 
 	constructor() {
 		this.height = 0;
 		this.last_block = null
 		this.mem_pool = []
+		this.utxo_set = []
+	}
+
+	add_transaction(trs: t_transaction) {
+		this.mem_pool.push(trs)
 	}
 
 	create_block(data: t_data, miner: string, transactions: Array<t_transaction>) {
