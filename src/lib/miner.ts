@@ -36,10 +36,12 @@ class Block implements t_block {
 export class Miner implements t_miner {
 	height: number;
 	last_block: t_block | null;
+	mem_pool: Array<t_transaction>
 
 	constructor() {
 		this.height = 0;
 		this.last_block = null
+		this.mem_pool = []
 	}
 
 	create_block(data: t_data, miner: string, transactions: Array<t_transaction>) {
