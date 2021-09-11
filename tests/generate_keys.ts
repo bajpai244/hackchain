@@ -5,7 +5,7 @@ import generate_keys from '../src/lib/generate_keys';
 import get_keys from '../src/lib/get_keys'
 import chalk from 'chalk'
 
-test(chalk.bgBlue('checking key generation'), async (t) => {
+test('checking key generation', async (t) => {
 	t.plan(2)
 	await clear_prev_file()
 	generate_keys('test', true)
