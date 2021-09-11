@@ -1,7 +1,5 @@
 import crypto from 'crypto'
 
-export type t_generate_keys_fn = (username: string) => void
-
 export type t_hash = string
 
 export type t_data = Object
@@ -52,5 +50,7 @@ export interface t_miner {
 	verify_transaction({ messg, fr: public_key, digital_signature }: t_transaction): void
 
 }
+
+export type t_generate_keys_fn = (username: string, test_mode?: boolean) => void
 
 export type t_get_keys = (user_name: string) => { public_key: t_enc_key, private_key: t_enc_key }

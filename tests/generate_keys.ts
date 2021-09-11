@@ -8,7 +8,7 @@ import chalk from 'chalk'
 test('checking key generation', async (t) => {
 	t.plan(2)
 	await clear_prev_file()
-	generate_keys('test')
+	generate_keys('test', true)
 
 	const { public_key, private_key } = get_keys('test')
 
