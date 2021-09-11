@@ -1,8 +1,8 @@
 import { t_block, t_data, t_enc_key, t_hash, t_miner, t_transaction, t_utxo } from "../types";
-
 import crypto from 'crypto'
 import calc_merkel_root from './merkel_tree_creator'
 import hash from './hash'
+import init_utxo_set from '../../data/init_utxo_set'
 
 class Block implements t_block {
 	height: number;
@@ -43,7 +43,12 @@ export class Miner implements t_miner {
 		this.height = 0;
 		this.last_block = null
 		this.mem_pool = []
-		this.utxo_set = []
+		this.utxo_set = init_utxo_set
+		this.sort_utxo_set()
+	}
+
+	sort_utxo_set() {
+		this.utxo_set.sort((a, b) => a.amount - b.amount)
 	}
 
 	add_transaction(trs: t_transaction) {

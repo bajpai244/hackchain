@@ -12,6 +12,9 @@ test('checking key generation', async (t) => {
 
 	const { public_key, private_key } = get_keys('test')
 
+	console.log(chalk.bgCyanBright(public_key))
+	console.log(chalk.bgCyanBright(private_key))
+
 	t.false(isEmpty(public_key))
 	t.false(isEmpty(private_key))
 
