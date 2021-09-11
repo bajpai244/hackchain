@@ -30,8 +30,8 @@ export interface t_block {
 
 export interface t_transaction {
 	nonce: number;
-	fr: t_enc_key_obj;
-	to: t_enc_key_obj;
+	fr: t_enc_key_obj | t_enc_key;
+	to: t_enc_key_obj | t_enc_key;
 	amount: number;
 	digital_signature: t_digital_signature;
 	messg: string

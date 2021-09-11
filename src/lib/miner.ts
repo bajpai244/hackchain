@@ -3,6 +3,7 @@ import crypto from 'crypto'
 import calc_merkel_root from './merkel_tree_creator'
 import hash from './hash'
 import init_utxo_set from '../../data/init_utxo_set'
+import get_keys from "./get_keys";
 
 class Block implements t_block {
 	height: number;
@@ -69,19 +70,20 @@ export class Miner implements t_miner {
 
 	verify_transaction({ messg, fr: public_key, digital_signature }: t_transaction) {
 
+		if (typeof (public_key) == "string") {
 
-		const res = crypto.verify(
-			"sha256",
-			Buffer.from(messg),
-			{
-				key: public_key,
-				padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
-			},
-			digital_signature
-		);
+			const res = crypto.verify(
+				"sha256",
+				Buffer.from(messg),
+				{
+					key: public_key,
+					padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+				},
+				digital_signature
+			);
 
-		console.log(res)
-
+			console.log(res)
+		}
 	}
 
 }
