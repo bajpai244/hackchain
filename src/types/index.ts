@@ -52,3 +52,5 @@ export interface t_miner {
 	verify_transaction({ messg, fr: public_key, digital_signature }: t_transaction): void
 
 }
+
+export type t_get_keys = (user_name: string) => { public_key: t_enc_key, private_key: t_enc_key }

@@ -7,7 +7,9 @@
 		"strictPropertyInitialization": true
 	},
 	"include": [
-		"src"
+		"src",
+		"data",
+		"tests"
 	],
 	"exclude": [
 		"node_modules"
