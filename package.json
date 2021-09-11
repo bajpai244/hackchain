@@ -23,6 +23,7 @@
   "homepage": "https://github.com/bajpai244/hackchain#readme",
   "dependencies": {
     "@tsconfig/node10": "^1.0.8",
+    "@tsconfig/node12": "^1.0.9",
     "@types/node": "^16.9.1",
     "@types/tape": "^4.13.2",
     "chalk": "^4.1.2",
