@@ -20,6 +20,4 @@ const generate_keys: t_generate_keys_fn = (user_name, test_mode = false) => {
 	fs.writeFileSync(path.join(__dirname, `${base_path}/${user_name}/private_key`), private_key)
 }
 
-generate_keys('harsh')
-
 export default generate_keys

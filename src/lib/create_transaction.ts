@@ -10,7 +10,7 @@ const create_transaction = (fr: t_enc_key, to: t_enc_key, amount: number) => {
 	const messg = hash(hash_obj)
 
 	const digital_signature = crypto.sign("sha256", Buffer.from(messg), {
-		key: to,
+		key: '',
 		padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
 	})
 

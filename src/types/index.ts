@@ -38,7 +38,7 @@ export interface t_transaction {
 }
 
 export interface t_utxo {
-	owner: t_enc_key,
+	owner: t_enc_key | t_enc_key_obj,
 	amount: number,
 }
 

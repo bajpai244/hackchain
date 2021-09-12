@@ -1,9 +1,11 @@
-import { t_block, t_data, t_enc_key, t_hash, t_miner, t_transaction, t_utxo } from "../types";
+import { t_block, t_data, t_enc_key, t_enc_key_obj, t_hash, t_miner, t_transaction, t_utxo } from "../types";
 import crypto from 'crypto'
 import calc_merkel_root from './merkel_tree_creator'
 import hash from './hash'
 import init_utxo_set from '../../data/init_utxo_set'
 import get_keys from "./get_keys";
+import { differenceWith } from 'ramda'
+import chalk from "chalk";
 
 class Block implements t_block {
 	height: number;
@@ -49,7 +51,7 @@ export class Miner implements t_miner {
 	}
 
 	sort_utxo_set() {
-		this.utxo_set.sort((a, b) => a.amount - b.amount)
+		this.utxo_set.sort((a, b) => b.amount - a.amount)
 	}
 
 	add_transaction(trs: t_transaction) {
@@ -68,22 +70,78 @@ export class Miner implements t_miner {
 		this.last_block = new Block(this.height, data, timestamp, miner, prev_block, prev_hash, transactions)
 	}
 
-	verify_transaction({ messg, fr: public_key, digital_signature }: t_transaction) {
+	utxo_generator(owner: t_enc_key_obj | t_enc_key, amount: number) {
+		return { owner, amount }
+	}
 
-		if (typeof (public_key) == "string") {
+	utxo_proccessor(utxos: Array<t_utxo>, owner: t_enc_key | t_enc_key_obj, new_owner: t_enc_key | t_enc_key_obj, amount: number) {
 
-			const res = crypto.verify(
-				"sha256",
-				Buffer.from(messg),
-				{
-					key: public_key,
-					padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
-				},
-				digital_signature
-			);
+		let tot_amount = 0
+		for (const utxo of utxos)
+			tot_amount += utxo.amount
 
-			console.log(res)
+		console.log(chalk.blue(tot_amount))
+
+		const change = tot_amount - amount
+		let change_utxo;
+		const new_utxo = this.utxo_generator(new_owner, amount)
+
+		this.utxo_set = differenceWith((a, b) => {
+			let res = false
+			if (a.amount == b.amount && a.owner == b.owner)
+				res = true
+			return res
+		}, this.utxo_set, utxos)
+
+		if (change) {
+			change_utxo = this.utxo_generator(owner, change)
+			this.utxo_set.push(change_utxo)
+		}
+
+		this.utxo_set.push(new_utxo)
+	}
+
+	verify_transaction({ messg, fr: public_key, to, amount, digital_signature }: t_transaction) {
+
+
+		const res = crypto.verify(
+			"sha256",
+			Buffer.from(messg),
+			{
+				key: public_key as t_enc_key,
+				padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+			},
+			digital_signature
+		);
+
+
+		if (res) {
+			const utxo_own_per: Array<t_utxo> = this.utxo_set.filter(({ owner }) => owner == public_key)
+			const utxos_to_be_used: Array<t_utxo> = []
+			let temp: number = 0
+			let sum: number = 0
+
+
+			for (let i = 0; i < utxo_own_per.length; i += 1) {
+				sum = utxo_own_per[i].amount
+			}
+
+
+			if (sum < amount) {
+				console.error(chalk.red(`${sum} is less than ${amount}`))
+			}
+
+
+			for (const utxo of utxo_own_per) {
+				if (temp >= amount)
+					break;
+				utxos_to_be_used.push(utxo)
+				temp += utxo.amount
+			}
+
+			this.utxo_proccessor(utxos_to_be_used, public_key, to, amount)
 		}
 	}
+
 
 }
